@@ -63,11 +63,12 @@
             transform: translateX(-50%) translateY(-10px);
         }
 
-        /* Mobile Responsiveness - 4 items per row, gap 6px, no captions */
+        /* Mobile Responsiveness - 4 items per row, gap 6px, padding 6px, no captions */
         @media screen and (max-width: 768px) {
             .grid-container {
                 grid-template-columns: repeat(4, 1fr);
                 gap: 6px;
+                padding: 6px;
             }
             .caption {
                 display: none;
