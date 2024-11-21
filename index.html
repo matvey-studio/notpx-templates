@@ -62,14 +62,36 @@
             opacity: 1;
             transform: translateX(-50%) translateY(-10px);
         }
+
+        /* Mobile Responsiveness - 4 items per row */
+        @media screen and (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
     </style>
     <script>
         function copyToClipboard(url) {
-            navigator.clipboard.writeText(url).then(() => {
-                showPopup("Copied to clipboard: " + url);
-            }).catch(err => {
-                showPopup("Failed to copy: " + err);
-            });
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(() => {
+                    showPopup("Copied to clipboard: " + url);
+                }).catch(err => {
+                    showPopup("Failed to copy: " + err);
+                });
+            } else {
+                // Fallback for unsupported browsers
+                const tempInput = document.createElement("input");
+                tempInput.value = url;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                try {
+                    document.execCommand("copy");
+                    showPopup("Copied to clipboard: " + url);
+                } catch (err) {
+                    showPopup("Failed to copy: " + err);
+                }
+                document.body.removeChild(tempInput);
+            }
         }
 
         function showPopup(message) {
